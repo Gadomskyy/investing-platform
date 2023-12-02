@@ -23,6 +23,14 @@ class stockInfo:
         data = r.json()
         return data
 
+    def getLatestStockPrice(self, ticker):
+        selectedStock = self.getStockData(ticker)
+        lastData = list(selectedStock[f'Time Series ({self.interval})'].items())[-1]
+        lastValue = lastData['4. close']
+        return lastValue
+
+
 x = stockInfo(api_key)
 
-pprint.pprint(x.getStockData("TSLA"))
+pprint.pprint(x.getStockData("AAPL"))
+pprint.pprint(x.getLatestStockPrice("AAPL"))
