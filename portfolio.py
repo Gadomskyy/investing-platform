@@ -13,7 +13,11 @@ class Portfolio:
         pass
 
     def addBalance(self, amount):
-        self.balance += amount
+        if amount < 0:
+            print("You cannot add negative balance.")
+        else:
+            self.balance += amount
+        return self.balance
 
     def removeBalance(self, amount):
         if amount > self.balance:
