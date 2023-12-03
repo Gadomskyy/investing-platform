@@ -1,16 +1,29 @@
+import stockinfo
+
+
 class Portfolio:
     def __init__(self):
         self.balance = 0
         self.stocks = {}
 
-    def buyStock(self):
-        pass
+    def buyStock(self, ticker, amount):
+        stock = stockinfo.stockInfo(stockinfo.api_key)
+        price = float(stock.getLatestStockPrice(ticker))
+        if price * amount > self.balance:
+            print("The stocks cost is bigger than your balance. Try again.")
+            return 0
+        if ticker in self.stocks:
+            self.stocks[ticker] += amount
+        else:
+            self.stocks[ticker] = amount
+
+        return 0
 
     def sellStock(self):
         pass
 
     def showPortfolio(self):
-        pass
+        print("Your stock portfolio:", self.stocks)
 
     def addBalance(self, amount):
         if amount < 0:
@@ -26,3 +39,7 @@ class Portfolio:
             self.balance = self.balance - amount
         return self.balance
 
+
+x = Portfolio()
+x.addBalance(10000)
+x.buyStock("AAPL", 10)
