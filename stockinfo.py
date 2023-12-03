@@ -25,7 +25,9 @@ class stockInfo:
 
     def getLatestStockPrice(self, ticker):
         selectedStock = self.getStockData(ticker)
-        lastData = list(selectedStock[f'Time Series ({self.interval})'].items())[-1]
+        lastData = list(selectedStock[f'Time Series ({self.interval})'].items())[0][1]
+        print(lastData)
+        #"4. close" value is the latest known value
         lastValue = lastData['4. close']
         return lastValue
 
