@@ -16,6 +16,7 @@ class Portfolio:
             self.stocks[ticker] += amount
         else:
             self.stocks[ticker] = amount
+        self.balance -= amount * price
 
         return 0
 
