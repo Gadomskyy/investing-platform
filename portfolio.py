@@ -6,6 +6,9 @@ class Portfolio:
         self.balance = 0
         self.stocks = {}
 
+    def showBalance(self):
+        print(f"Your balance is {self.balance}. ")
+
     def buyStock(self, ticker, amount):
         stock = stockinfo.stockInfo(stockinfo.api_key)
         price = float(stock.getLatestStockPrice(ticker))
@@ -56,6 +59,6 @@ x = Portfolio()
 x.addBalance(10000)
 x.buyStock("AAPL", 10)
 x.showPortfolio()
-x.sellStock("AAPL", 5)
+x.sellStock("AAPL", 13)
 x.showPortfolio()
-print(x.balance)
+x.showBalance()
