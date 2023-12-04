@@ -19,8 +19,20 @@ class Portfolio:
 
         return 0
 
-    def sellStock(self):
-        pass
+    def sellStock(self, ticker, amount):
+        stock = stockinfo.stockInfo(stockinfo.api_key)
+        price = float(stock.getLatestStockPrice(ticker))
+        if ticker not in self.stocks:
+            print("You do not have this stock in your portfolio.")
+            return 0
+        else:
+            if amount > self.stocks[ticker]:
+                print("You do not have a sufficient amount of stock. Please try again.")
+                return 0
+            else:
+                self.stocks[ticker] -= amount
+                self.balance += amount * price
+        return 0
 
     def showPortfolio(self):
         print("Your stock portfolio:", self.stocks)
@@ -39,7 +51,10 @@ class Portfolio:
             self.balance = self.balance - amount
         return self.balance
 
-
 x = Portfolio()
 x.addBalance(10000)
 x.buyStock("AAPL", 10)
+x.showPortfolio()
+x.sellStock("AAPL", 5)
+x.showPortfolio()
+print(x.balance)
