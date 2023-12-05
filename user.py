@@ -14,6 +14,8 @@ class User:
 
     def setPassword(self):
         userChoice = input("Set a password for your account: ")
+        while len(userChoice) < 6 or not(any(char.isdigit() for char in userChoice)):
+            userChoice = input("Your password needs to be at least 6 characters long and contain at least one number. Try again. ")
         return userChoice
 
     def checkPassword(self):
