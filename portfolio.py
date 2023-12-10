@@ -1,13 +1,21 @@
 import stockinfo
-
+import datetime
+import time
 
 class Portfolio:
     def __init__(self):
         self.balance = 0
         self.stocks = {}
+        self.balanceHistory = {}
 
     def showBalance(self):
         print(f"Your balance is {self.balance}. ")
+
+    def showBalanceHistory(self):
+        print(f"Your balance history is: ")
+        for element in self.balanceHistory:
+            print(element, self.balanceHistory[element])
+        self.showBalance()
 
     def buyStock(self, ticker, amount):
         stock = stockinfo.stockInfo(stockinfo.api_key)
@@ -46,6 +54,8 @@ class Portfolio:
             print("You cannot add negative balance.")
         else:
             self.balance += amount
+            currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+            self.balanceHistory[currentTime] = amount
         return self.balance
 
     def removeBalance(self, amount):
@@ -53,12 +63,17 @@ class Portfolio:
             print("Amount to withdraw cannot be bigger than your balance.")
         else:
             self.balance = self.balance - amount
+            currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+            self.balanceHistory[currentTime] = amount
         return self.balance
 
 x = Portfolio()
 x.addBalance(10000)
+time.sleep(1)
 x.buyStock("AAPL", 10)
 x.showPortfolio()
-x.sellStock("AAPL", 13)
+x.sellStock("AAPL", 3)
 x.showPortfolio()
 x.showBalance()
+x.removeBalance(-5444)
+x.showBalanceHistory()

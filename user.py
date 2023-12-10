@@ -2,12 +2,20 @@ import sys
 
 
 class User:
-    def __init__(self, username):
-        self.username = username
+    def __init__(self):
+        self.username = self.setUsername()
         self.password = self.setPassword()
+
+    def setUsername(self):
+        userChoice = input("Select a username for your account. ")
+        while len(userChoice) < 3:
+            userChoice = input("Your username needs to be at least 3 characters long. Try again. ")
+        return userChoice
 
     def setPassword(self):
         userChoice = input("Set a password for your account: ")
+        while len(userChoice) < 6 or not(any(char.isdigit() for char in userChoice)):
+            userChoice = input("Your password needs to be at least 6 characters long and contain at least one number. Try again. ")
         return userChoice
 
     def checkPassword(self):
@@ -23,5 +31,4 @@ class User:
             print(f"Welcome, {self.username}!")
 
 
-jachu = User("Jachu")
-jachu.checkPassword()
+jachu = User()
