@@ -2,9 +2,9 @@ import mysql.connector
 
 mydb = mysql.connector.connect(host="localhost", user="root", passwd="qwerty123")
 
+mycursor = mydb.cursor()
 
-def createDatabase():
-    mycursor = mydb.cursor()
-    mycursor.execute("Create database investingDB")
+def createDatabase(name):
+    mycursor.execute(f"Create database {name}")
 
-createDatabase()
+
