@@ -6,6 +6,8 @@ class User:
     def __init__(self):
         self.database = dbase_conn.Database()
         self.database.createOrConnectDatabase("investingDB")
+
+    def register(self):
         self.username = self.setUsername()
         self.password = self.setPassword()
         self.database.createUserRecord(self.username, self.password)
@@ -34,5 +36,3 @@ class User:
         else:
             print(f"Welcome, {self.username}!")
 
-
-jachu = User()
