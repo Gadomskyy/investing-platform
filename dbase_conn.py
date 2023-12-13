@@ -19,7 +19,7 @@ class Database:
         if self.collection.find_one({"name": name}):
             print(f"User with name '{name}' already exists. Please choose another name.")
         else:
-            mydict = {"name": name, "password": password, "stocks": {}}
+            mydict = {"name": name, "password": password, "stocks": {}, "balancehistory": {}}
             self.collection.insert_one(mydict)
 
 

@@ -1,17 +1,39 @@
 import sys
 import dbase_conn
+import portfolio
 
 
 class User:
     def __init__(self):
         self.database = dbase_conn.Database()
         self.database.createOrConnectDatabase("investingDB")
+        self.portfolio = portfolio.Portfolio()
+
+    def register(self):
         self.username = self.setUsername()
         self.password = self.setPassword()
         self.database.createUserRecord(self.username, self.password)
 
+    def login(self):
+
+        username = input("Enter your username: ")
+        password = input("Enter your password: ")
+
+        userRecord = self.database.collection.find_one({"name": username, "password": password})
+
+        if userRecord:
+            print("Login successful!")
+            # Set user attributes based database record
+            self.username = userRecord["name"]
+            self.password = userRecord["password"]
+            self.portfolio.stocks = userRecord.get("stocks", {})
+            self.portfolio.balanceHistory = userRecord.get("logs", {})
+        else:
+            print("Invalid username or password. Please try again.")
+
+
     def setUsername(self):
-        userChoice = input("Select a username for your account. ")
+        userChoice = input("Select a username for your account: ")
         while len(userChoice) < 3:
             userChoice = input("Your username needs to be at least 3 characters long. Try again. ")
         return userChoice
@@ -34,5 +56,3 @@ class User:
         else:
             print(f"Welcome, {self.username}!")
 
-
-jachu = User()
