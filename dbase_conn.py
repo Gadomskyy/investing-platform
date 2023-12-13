@@ -7,6 +7,7 @@ class Database:
 
     def createOrConnectDatabase(self, name):
         self.db = self.client[name]
+        self.collection = self.db["userinfo"]
 
     def createCollection(self, collection_name):
         if hasattr(self, 'db'):
@@ -15,14 +16,11 @@ class Database:
             print("No database selected. Create database first.")
 
     def createUserRecord(self, name, password):
-        mydict = {"name": name, "password": password, "stocks": {}}
-        self.collection.insert_one(mydict)
-
-
-
-x = Database()
-x.createDatabase("investingDB")
-x.createCollection("userinfo")
+        if self.collection.find_one({"name": name}):
+            print(f"User with name '{name}' already exists. Please choose another name.")
+        else:
+            mydict = {"name": name, "password": password, "stocks": {}}
+            self.collection.insert_one(mydict)
 
 
 
