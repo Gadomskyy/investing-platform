@@ -14,11 +14,15 @@ class Database:
         else:
             print("No database selected. Create database first.")
 
+    def createUserRecord(self, name, password):
+        mydict = {"name": name, "password": password, "stocks": {}}
+        self.collection.insert_one(mydict)
+
+
+
 x = Database()
 x.createDatabase("investingDB")
 x.createCollection("userinfo")
-mydict = { "name": "John", "id":  1}
-x.collection.insert_one(mydict)
 
 
 
