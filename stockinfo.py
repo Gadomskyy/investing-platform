@@ -29,9 +29,3 @@ class stockInfo:
         #"4. close" value is the latest known value
         lastValue = lastData['4. close']
         return lastValue
-
-
-x = stockInfo(api_key)
-
-pprint.pprint(x.getStockData("AAPL"))
-pprint.pprint(x.getLatestStockPrice("AAPL"))

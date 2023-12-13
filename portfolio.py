@@ -66,14 +66,3 @@ class Portfolio:
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             self.balanceHistory[currentTime] = amount
         return self.balance
-
-x = Portfolio()
-x.addBalance(10000)
-time.sleep(1)
-x.buyStock("AAPL", 10)
-x.showPortfolio()
-x.sellStock("AAPL", 3)
-x.showPortfolio()
-x.showBalance()
-x.removeBalance(-5444)
-x.showBalanceHistory()
