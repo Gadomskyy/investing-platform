@@ -1,10 +1,14 @@
 import sys
+import dbase_conn
 
 
 class User:
     def __init__(self):
+        self.database = dbase_conn.Database()
+        self.database.createOrConnectDatabase("investingDB")
         self.username = self.setUsername()
         self.password = self.setPassword()
+        self.database.createUserRecord(self.username, self.password)
 
     def setUsername(self):
         userChoice = input("Select a username for your account. ")
