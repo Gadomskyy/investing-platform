@@ -5,7 +5,7 @@ class Database:
     def __init__(self):
         self.client = MongoClient("mongodb://localhost:27017")
 
-    def createDatabase(self, name):
+    def createOrConnectDatabase(self, name):
         self.db = self.client[name]
 
     def createCollection(self, collection_name):
@@ -23,6 +23,7 @@ class Database:
 x = Database()
 x.createDatabase("investingDB")
 x.createCollection("userinfo")
+
 
 
 
