@@ -1,13 +1,13 @@
 import sys
 import dbase_conn
-import portfolio
+from portfolio import Portfolio
 
 
 class User:
     def __init__(self):
         self.database = dbase_conn.Database()
         self.database.createOrConnectDatabase("investingDB")
-        self.portfolio = portfolio.Portfolio()
+        self.portfolio = Portfolio(self)
 
     def register(self):
         self.username = self.setUsername()
@@ -55,4 +55,3 @@ class User:
             sys.exit()
         else:
             print(f"Welcome, {self.username}!")
-
