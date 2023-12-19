@@ -1,9 +1,10 @@
 import stockinfo
 import datetime
-import time
 
 class Portfolio:
-    def __init__(self):
+
+    def __init__(self, user):
+        self.user = user
         self.balance = 0
         self.stocks = {}
         self.balanceHistory = {}
@@ -56,6 +57,7 @@ class Portfolio:
             self.balance += amount
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             self.balanceHistory[currentTime] = amount
+
         return self.balance
 
     def removeBalance(self, amount):
