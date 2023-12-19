@@ -55,7 +55,3 @@ class User:
             sys.exit()
         else:
             print(f"Welcome, {self.username}!")
-
-x = User()
-x.login()
-x.portfolio.addBalance(1000)
