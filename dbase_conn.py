@@ -23,6 +23,14 @@ class Database:
             self.collection.insert_one(mydict)
 
 
+    #updates the balance field in the database
+    def updateBalance(self, login, amount):
+
+        recordfilter = {"name": login}
+        newbalance = {"$inc": {'balance': amount}}
+        self.collection.update_one(recordfilter, newbalance)
+
+
 
 
 
