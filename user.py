@@ -28,6 +28,7 @@ class User:
             self.password = userRecord["password"]
             self.portfolio.stocks = userRecord.get("stocks", {})
             self.portfolio.balanceHistory = userRecord.get("logs", {})
+            self.portfolio.balance = userRecord.get("balance", 0)
         else:
             print("Invalid username or password. Please try again.")
 
