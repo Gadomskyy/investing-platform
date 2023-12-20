@@ -1,5 +1,6 @@
 import stockinfo
 import datetime
+import dbase_conn
 
 class Portfolio:
 
@@ -58,6 +59,8 @@ class Portfolio:
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             self.balanceHistory[currentTime] = amount
 
+        self.user.database.updateBalance(self.user.username, amount)
+
         return self.balance
 
     def removeBalance(self, amount):
@@ -67,4 +70,7 @@ class Portfolio:
             self.balance = self.balance - amount
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             self.balanceHistory[currentTime] = amount
+
+        self.user.database.updateBalance(self.user.username, -amount)
+
         return self.balance
