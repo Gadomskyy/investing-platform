@@ -11,7 +11,8 @@ class Portfolio:
         self.balanceHistory = {}
 
     def showBalance(self):
-        print(f"Your balance is {self.balance}. ")
+        balance = self.user.portfolio.balance
+        print(f"Your balance: {balance}")
 
     def showBalanceHistory(self):
         print(f"Your balance history is: ")
