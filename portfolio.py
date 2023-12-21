@@ -15,9 +15,8 @@ class Portfolio:
         print(f"Your balance: {balance}")
 
     def showBalanceHistory(self):
-        print(f"Your balance history is: ")
-        for element in self.balanceHistory:
-            print(element, self.balanceHistory[element])
+        balancehistory = self.user.portfolio.balanceHistory
+        print(f"Your balance history is: {balancehistory}\n")
         self.showBalance()
 
     def buyStock(self, ticker, amount):
@@ -60,7 +59,7 @@ class Portfolio:
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             self.balanceHistory[currentTime] = amount
 
-        self.user.database.updateBalance(self.user.username, amount)
+        self.user.database.updateData(self.user.username, "inc", "balance", amount)
 
         return self.balance
 
@@ -72,6 +71,6 @@ class Portfolio:
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             self.balanceHistory[currentTime] = amount
 
-        self.user.database.updateBalance(self.user.username, -amount)
+        self.user.database.updateData(self.user.username, "inc", "balance", -amount)
 
         return self.balance

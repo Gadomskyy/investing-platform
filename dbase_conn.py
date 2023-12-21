@@ -24,11 +24,10 @@ class Database:
 
 
     #updates the balance field in the database
-    def updateBalance(self, login, amount):
-
+    def updateData(self, login, operation, field, amount):
         recordfilter = {"name": login}
-        newbalance = {"$inc": {'balance': amount}}
-        self.collection.update_one(recordfilter, newbalance)
+        newdata = {f"${operation}": {field: amount}}
+        self.collection.update_one(recordfilter, newdata)
 
 
 
