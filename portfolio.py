@@ -1,6 +1,5 @@
 import stockinfo
 import datetime
-import dbase_conn
 
 class Portfolio:
 
@@ -8,7 +7,7 @@ class Portfolio:
         self.user = user
         self.balance = 0
         self.stocks = {}
-        self.balanceHistory = {}
+        self.balanceHistory = list()
 
     def showBalance(self):
         balance = self.user.portfolio.balance
@@ -57,11 +56,9 @@ class Portfolio:
         else:
             self.balance += amount
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-            self.balanceHistory[currentTime] = amount
-
-        self.user.database.updateData(self.user.username, "inc", "balance", amount)
-
-        return self.balance
+            self.balanceHistory.append({"timestamp": currentTime, "amount": amount})
+            self.user.database.updateData(self.user.username, "inc", "balance", amount)
+            self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: amount})
 
     def removeBalance(self, amount):
         if amount > self.balance:
@@ -69,8 +66,8 @@ class Portfolio:
         else:
             self.balance = self.balance - amount
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-            self.balanceHistory[currentTime] = amount
-
-        self.user.database.updateData(self.user.username, "inc", "balance", -amount)
+            self.balanceHistory.append({"timestamp": currentTime, "amount": -amount})
+            self.user.database.updateData(self.user.username, "inc", "balance", -amount)
+            self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: -amount})
 
         return self.balance
