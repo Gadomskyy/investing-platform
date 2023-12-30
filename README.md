@@ -3,4 +3,5 @@ The goal of this project is to make a platform imitating a broker's office, allo
 
 
 TODO:
--rework the show balance/balance history/stocks methods to pull directly from the database
+-implement stockhistory akin to balancehistory
+-add check if login exist in database already
