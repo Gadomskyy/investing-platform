@@ -29,6 +29,8 @@ class Portfolio:
         else:
             self.stocks[ticker] = amount
         self.balance -= amount * price
+        self.user.database.updateData(self.user.username, "inc", "balance", -amount * price)
+        self.user.database.updateData(self.user.username, "set", "stocks", self.stocks)
 
         return 0
 
@@ -45,6 +47,8 @@ class Portfolio:
             else:
                 self.stocks[ticker] -= amount
                 self.balance += amount * price
+                self.user.database.updateData(self.user.username, "inc", "balance", amount * price)
+                self.user.database.updateData(self.user.username, "set", "stocks", self.stocks)
         return 0
 
     def showPortfolio(self):
