@@ -32,7 +32,8 @@ class User:
         else:
             if self.isLoginTaken(username):
                 self.checkPassword(username, password)
-                self.setUserRecords()
+                if userRecord:
+                    self.setUserRecords()
             else:
                 print("No such login. Try logging again.")
 
