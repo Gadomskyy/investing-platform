@@ -80,8 +80,6 @@ class User:
             sys.exit()
         else:
             print(f"Welcome, {username}!")
-            userRecord = self.database.collection.find_one({"name": username, "password": password})
-            self.userRecord = userRecord
             return userPassword
 
     def isLoginTaken(self, username):
