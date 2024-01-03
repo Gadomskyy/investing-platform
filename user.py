@@ -22,17 +22,17 @@ class User:
         username = input("Enter your username: ")
         password = input("Enter your password: ")
 
-        userRecord = self.database.collection.find_one({"name": username, "password": password})
-        self.userRecord = userRecord
+        self.userRecord = self.findUser(username, password)
 
-        if userRecord:
+        if self.userRecord:
             print("Login successful!")
             # Set user attributes based database record
             self.setUserRecords()
         else:
             if self.isLoginTaken(username):
-                self.checkPassword(username, password)
-                if userRecord:
+                correctPassword = self.checkPassword(username, password)
+                self.userRecord = self.findUser(username, correctPassword)
+                if self.userRecord:
                     self.setUserRecords()
             else:
                 print("No such login. Try logging again.")
@@ -40,6 +40,10 @@ class User:
     @staticmethod
     def setAttribute(userRecord, field, failsafe=None):
         return userRecord[field]
+
+    def findUser(self, username, password):
+        userRecord = self.database.collection.find_one({"name": username, "password": password})
+        return userRecord
 
     def setUserRecords(self):
         self.username = self.setAttribute(self.userRecord, "name")
@@ -76,6 +80,8 @@ class User:
             sys.exit()
         else:
             print(f"Welcome, {username}!")
+            userRecord = self.database.collection.find_one({"name": username, "password": password})
+            self.userRecord = userRecord
             return userPassword
 
     def isLoginTaken(self, username):
