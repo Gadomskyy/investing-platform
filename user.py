@@ -1,5 +1,4 @@
 import sys
-import time
 
 import dbase_conn
 from portfolio import Portfolio
@@ -43,8 +42,11 @@ class User:
 
     def setUsername(self):
         userChoice = input("Select a username for your account: ")
-        while len(userChoice) < 3:
-            userChoice = input("Your username needs to be at least 3 characters long. Try again. ")
+        while len(userChoice) < 3 or self.isLoginTaken(userChoice):
+            if len(userChoice) < 3:
+                userChoice = input("Your username needs to be at least 3 characters long. Try again: ")
+            if self.isLoginTaken(userChoice):
+               userChoice = input("Username already taken. Please choose a different username: ")
         return userChoice
 
     def setPassword(self):
@@ -64,3 +66,10 @@ class User:
             sys.exit()
         else:
             print(f"Welcome, {self.username}!")
+
+    def isLoginTaken(self, username):
+        existing = self.database.collection.find_one({"name": username})
+        if existing:
+            return True
+        return False
+
