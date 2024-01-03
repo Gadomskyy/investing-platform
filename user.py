@@ -6,8 +6,9 @@ from portfolio import Portfolio
 
 
 class User:
+    database = dbase_conn.Database()
+
     def __init__(self):
-        self.database = dbase_conn.Database()
         self.database.createOrConnectDatabase("investingDB")
         self.portfolio = Portfolio(self)
         self.userRecord = None
