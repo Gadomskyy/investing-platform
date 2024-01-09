@@ -45,6 +45,10 @@ class User:
         userRecord = self.database.collection.find_one({"name": username, "password": password})
         return userRecord
 
+    def deleteOneUser(self, username):
+        print(f"Deleting user {username}...")
+        self.database.collection.delete_one({"name": username})
+
     def setUserRecords(self):
         self.username = self.setAttribute(self.userRecord, "name")
         self.password = self.setAttribute(self.userRecord, "password")
