@@ -3,5 +3,7 @@ The goal of this project is to make a platform imitating a broker's office, allo
 
 
 TODO:
--implement stockhistory akin to balancehistory
--add check if login exist in database already
+-implement stockhistory
+-implement average bought price for stocks
+-stock news API
+-add validation if user already exists when registering user
