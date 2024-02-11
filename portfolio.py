@@ -63,7 +63,7 @@ class Portfolio:
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             self.balanceHistory.append({"type": "Deposit", "timestamp": currentTime, "amount": amount})
             self.user.database.updateData(self.user.username, "inc", "balance", amount)
-            self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: amount})
+            self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: {"type": "Deposit", "amount": amount}})
 
     def removeBalance(self, amount):
         amount = round(amount, 2)
@@ -74,6 +74,6 @@ class Portfolio:
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             self.balanceHistory.append({"type": "Withdrawal", "timestamp": currentTime, "amount": -amount})
             self.user.database.updateData(self.user.username, "inc", "balance", -amount)
-            self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: -amount})
+            self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: {"type": "Withdrawal", "amount": amount}})
 
         return self.balance
