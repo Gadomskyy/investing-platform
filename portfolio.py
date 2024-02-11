@@ -29,8 +29,12 @@ class Portfolio:
         else:
             self.stocks[ticker] = amount
         self.balance -= amount * price
+        currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
         self.user.database.updateData(self.user.username, "inc", "balance", -amount * price)
         self.user.database.updateData(self.user.username, "set", "stocks", self.stocks)
+        transaction = {"type": "Buy", "ticker": ticker, "amount": amount, "price": amount * (-price)}
+        self.balanceHistory.append({currentTime: transaction})
+        self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: transaction})
 
         return 0
 
@@ -47,8 +51,12 @@ class Portfolio:
             else:
                 self.stocks[ticker] -= amount
                 self.balance += amount * price
+                currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
                 self.user.database.updateData(self.user.username, "inc", "balance", amount * price)
                 self.user.database.updateData(self.user.username, "set", "stocks", self.stocks)
+                transaction = {"type": "Sell", "ticker": ticker, "amount": amount, "price": amount * price}
+                self.balanceHistory.append({currentTime: transaction})
+                self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: transaction})
         return 0
 
     def showPortfolio(self):
@@ -61,9 +69,10 @@ class Portfolio:
             amount = round(amount, 2)
             self.balance += amount
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-            self.balanceHistory.append({"type": "Deposit", "timestamp": currentTime, "amount": amount})
+            transaction = {"type": "Deposit", "amount": amount}
+            self.balanceHistory.append({currentTime: transaction})
             self.user.database.updateData(self.user.username, "inc", "balance", amount)
-            self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: {"type": "Deposit", "amount": amount}})
+            self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: transaction})
 
     def removeBalance(self, amount):
         amount = round(amount, 2)
@@ -72,8 +81,9 @@ class Portfolio:
         else:
             self.balance = self.balance - amount
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-            self.balanceHistory.append({"type": "Withdrawal", "timestamp": currentTime, "amount": -amount})
+            transaction = {"type": "Withdrawal", "amount": -amount}
+            self.balanceHistory.append({currentTime: transaction})
             self.user.database.updateData(self.user.username, "inc", "balance", -amount)
-            self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: {"type": "Withdrawal", "amount": amount}})
+            self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: transaction})
 
         return self.balance
