@@ -10,7 +10,7 @@ class Portfolio:
         self.balanceHistory = list()
 
     def showBalance(self):
-        balance = self.user.portfolio.balance
+        balance = round(self.user.portfolio.balance, 2)
         print(f"Your balance: {balance}")
 
     def showBalanceHistory(self):
@@ -58,6 +58,7 @@ class Portfolio:
         if amount < 0:
             print("You cannot add negative balance.")
         else:
+            amount = round(amount, 2)
             self.balance += amount
             currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             self.balanceHistory.append({"timestamp": currentTime, "amount": amount})
@@ -65,6 +66,7 @@ class Portfolio:
             self.user.database.updateData(self.user.username, "push", "balancehistory", {currentTime: amount})
 
     def removeBalance(self, amount):
+        amount = round(amount, 2)
         if amount > self.balance:
             print("Amount to withdraw cannot be bigger than your balance.")
         else:
